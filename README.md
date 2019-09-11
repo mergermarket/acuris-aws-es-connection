@@ -5,7 +5,7 @@
 ## Usage
  Javascript:
 ```
-const { createAWSConnection, awsCredsifyAll, awsGetCredentials } = require('aws-es-connection')
+const { createAWSConnection, awsCredsifyAll, awsGetCredentials } = require('@acuris/aws-es-connection')
 
 const awsCredentials = await awsGetCredentials()
 const AWSConnection = createAWSConnection(awsCredentials)
@@ -22,7 +22,7 @@ await client.cat.help()
 
  Typescript:
 ```
-import { createAWSConnection, awsCredsifyAll, awsGetCredentials } from 'aws-es-connection'
+import { createAWSConnection, awsCredsifyAll, awsGetCredentials } from '@acuris/aws-es-connection'
 import AWS from 'aws-sdk'
 import { Client } from '@elastic/elasticsearch'
 
