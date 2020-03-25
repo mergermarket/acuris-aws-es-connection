@@ -1,5 +1,5 @@
-import AWS from 'aws-sdk'
-import http from 'http'
+import * as AWS from 'aws-sdk'
+import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
 import { Client, Connection } from '@elastic/elasticsearch'
 
@@ -13,8 +13,8 @@ class AWSConnection extends Connection {
     this.makeRequest = this.signedRequest
   }
 
-  private signedRequest(reqParams: http.ClientRequestArgs): http.ClientRequest {
-    return http.request(sign(reqParams, this.awsCredentials))
+  private signedRequest(reqParams: ClientRequestArgs): ClientRequest {
+    return request(sign(reqParams, this.awsCredentials))
   }
 }
 

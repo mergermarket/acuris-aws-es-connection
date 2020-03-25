@@ -1,5 +1,5 @@
 import { createAWSConnection, awsCredsifyAll, awsGetCredentials} from './index'
-import AWS from 'aws-sdk'
+import * as AWS from 'aws-sdk'
 import { Client } from '@elastic/elasticsearch'
 
 describe('aws-es-connection', () => {
@@ -104,7 +104,7 @@ describe('aws-es-connection', () => {
       await esClient.index({ index: indexName, refresh: 'wait_for', body: doc3 })
 
       const result = await esClient.search({ index: indexName, q: 'Hello' })
-      expect(result.body.hits.total).toBe(2)
+      expect(result.body.hits.total.value).toBe(2)
     } finally {
       // Clean up
       await esClient.indices.delete({ index: indexName })
