@@ -1,7 +1,7 @@
 {
   "name": "@acuris/aws-es-connection",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "AWS ElasticSearch connection for the @elastic/elasticsearch ES client",
   "keywords": [
     "aws",
@@ -21,7 +21,9 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "tsc",

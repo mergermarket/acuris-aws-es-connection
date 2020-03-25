@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "module": "commonjs",
     "outDir": "./dist/",
     "target": "es6",
     "declaration": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/**/*.test.ts"]
 }
