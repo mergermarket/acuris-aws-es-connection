@@ -5,6 +5,7 @@
 ## Usage
  Javascript:
 ```
+const { Client } = require('@elastic/elasticsearch');
 const { createAWSConnection, awsCredsifyAll, awsGetCredentials } = require('@acuris/aws-es-connection')
 
 const awsCredentials = await awsGetCredentials()
