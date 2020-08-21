@@ -1,4 +1,6 @@
-import * as AWS from 'aws-sdk'
+// @ts-ignore
+import { config } from 'aws-sdk/lib/core';
+import { Credentials } from 'aws-sdk/lib/credentials';
 import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
 import { Client, Connection } from '@elastic/elasticsearch'
@@ -18,7 +20,7 @@ class AWSConnection extends Connection {
   }
 }
 
-export function createAWSConnection(awsCredentials: AWS.Credentials) {
+export function createAWSConnection(awsCredentials: Credentials) {
   AWSConnection.prototype.awsCredentials = awsCredentials
   return AWSConnection
 }
@@ -38,13 +40,13 @@ export const awsCredsify = (originalFunc: Function) => {
     // Wrap promise API
     const isPromiseCall = typeof callback !== 'function'
     if (isPromiseCall) {
-      return (AWS.config.credentials as AWS.Credentials)
+      return (config.credentials as Credentials)
         .getPromise()
         .then(() => originalFunc.call(this, params, options, callback))
     }
 
     //Wrap callback API
-    ;(AWS.config.credentials as AWS.Credentials).get(err => {
+    ;(config.credentials as Credentials).get(err => {
       if (err) {
         callback(err, null)
         return
@@ -80,14 +82,14 @@ export const awsCredsifyAll = (object: Client, isNested: boolean = false): Clien
   return object
 }
 
-export const awsGetCredentials = (): Promise<AWS.Credentials> => {
+export const awsGetCredentials = (): Promise<Credentials> => {
   return new Promise((resolve, reject) => {
-    AWS.config.getCredentials(err => {
+    config.getCredentials(err => {
       if (err) {
         return reject(err)
       }
 
-      resolve(AWS.config.credentials as AWS.Credentials)
+      resolve(config.credentials as Credentials)
     })
   })
 }
