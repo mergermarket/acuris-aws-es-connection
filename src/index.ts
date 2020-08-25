@@ -1,5 +1,4 @@
-import { config } from 'aws-sdk/global';
-import { Credentials } from 'aws-sdk/lib/credentials';
+import { config, Credentials } from 'aws-sdk/global';
 import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
 import { Client, Connection } from '@elastic/elasticsearch'
