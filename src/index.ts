@@ -1,5 +1,4 @@
-// @ts-ignore
-import { config } from 'aws-sdk/lib/core';
+import { config } from 'aws-sdk/global';
 import { Credentials } from 'aws-sdk/lib/credentials';
 import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
