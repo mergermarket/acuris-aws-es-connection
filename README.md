@@ -44,6 +44,10 @@ await client.cat.help()
 This package has two parts. Firstly the createAWSConnection returns a class which signs the calls to AWS elasticsearch. The second part - awsCredsifyAll wraps the elastic search client so that all calls first check that the AWS credentials haven't expired and refreshes them when needed.
 
 ## Developer notes
+
+Does not currently work with elastic-js v7.9.1 and above
+v1.1.2 updates peer dependencies to enforce this
+
 ### Running the tests.
 Make sure that your AWS credentials are available to your env, for example you could set them in your ENV.
 
