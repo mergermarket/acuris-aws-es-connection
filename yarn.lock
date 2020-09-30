@@ -199,8 +199,8 @@
 
 "@elastic/elasticsearch@7.9.0":
   version "7.9.0"
-  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@elastic/elasticsearch/-/elasticsearch-7.9.0.tgz#098f8adbe45cba1864ea5edc59638ea983904fe5"
-  integrity sha1-CY+K2+Rcuhhk6l7cWWOOqYOQT+U=
+  resolved "https://registry.yarnpkg.com/@elastic/elasticsearch/-/elasticsearch-7.9.0.tgz#098f8adbe45cba1864ea5edc59638ea983904fe5"
+  integrity sha512-iSLQvQafspN03YayzccShkKgJeRsUbncbtIhIL2SeiH01xwdnOZcp0nCvSNaMsH28A3YQ4ogTs9K8eXe42UaUA==
   dependencies:
     debug "^4.1.1"
     decompress-response "^4.2.0"
