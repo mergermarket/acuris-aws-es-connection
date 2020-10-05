@@ -1,9 +1,7 @@
-import { config, Credentials } from 'aws-sdk/global';
+import { config, Credentials } from 'aws-sdk/global'
 import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
-import { Client, Connection } from '@elastic/elasticsearch'
-
-import whitelistedProps from './whitelisted-props'
+import { Connection, Transport } from '@elastic/elasticsearch'
 
 class AWSConnection extends Connection {
   public awsCredentials
@@ -18,13 +16,9 @@ class AWSConnection extends Connection {
   }
 }
 
-export function createAWSConnection(awsCredentials: Credentials) {
-  AWSConnection.prototype.awsCredentials = awsCredentials
-  return AWSConnection
-}
-
-export const awsCredsify = (originalFunc: Function) => {
-  return (params, options, callback) => {
+class AWSTransport extends Transport {
+  // @ts-ignore
+  public request(params, options, callback = undefined) {
     if (typeof options === 'function') {
       callback = options
       options = {}
@@ -34,50 +28,26 @@ export const awsCredsify = (originalFunc: Function) => {
       params = {}
       options = {}
     }
-
     // Wrap promise API
     const isPromiseCall = typeof callback !== 'function'
     if (isPromiseCall) {
-      return (config.credentials as Credentials)
-        .getPromise()
-        .then(() => originalFunc.call(this, params, options, callback))
+      return (config.credentials as Credentials).getPromise().then(() => super.request(params, options, callback))
     }
 
-    //Wrap callback API
     ;(config.credentials as Credentials).get(err => {
       if (err) {
         callback(err, null)
         return
       }
 
-      originalFunc(params, options, callback)
+      return super.request(params, options, callback)
     })
   }
 }
 
-export const awsCredsifyAll = (object: Client, isNested: boolean = false): Client => {
-  for (const key of Object.getOwnPropertyNames(object)) {
-    if (!isNested && !whitelistedProps.includes(key)) {
-      continue
-    }
-
-    // Go 1 level deep and wrap the nested functions
-    if (!isNested && typeof object[key] === 'object') {
-      object[key] = awsCredsifyAll(object[key], true)
-      continue
-    }
-
-    // Wrap all the functions that exist on the object and not its parents
-    const descriptor = Object.getOwnPropertyDescriptor(object, key)
-    if (!descriptor.get) {
-      const func = object[key]
-      if (typeof func === 'function') {
-        object[key] = awsCredsify(func)
-      }
-    }
-  }
-
-  return object
+export function createAWSConnection(awsCredentials: Credentials) {
+  AWSConnection.prototype.awsCredentials = awsCredentials
+  return { Connection: AWSConnection, Transport: AWSTransport }
 }
 
 export const awsGetCredentials = (): Promise<Credentials> => {
