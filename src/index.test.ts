@@ -22,7 +22,6 @@ describe('aws-es-connection', () => {
     }
 
     const awsEsConnection = createAWSConnection(await awsGetCredentials())
-    // @ts-ignore
     esClient = new Client({
       ...awsEsConnection,
       node: esEndpoint

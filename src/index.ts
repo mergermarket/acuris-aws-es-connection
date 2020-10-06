@@ -2,6 +2,7 @@ import { config, Credentials } from 'aws-sdk/global'
 import { request, ClientRequest, ClientRequestArgs } from 'http'
 import { sign } from 'aws4'
 import { Connection, Transport } from '@elastic/elasticsearch'
+import { ApiResponse, TransportRequestPromise } from '@elastic/elasticsearch/lib/Transport'
 
 class AWSConnection extends Connection {
   public awsCredentials
@@ -17,7 +18,6 @@ class AWSConnection extends Connection {
 }
 
 class AWSTransport extends Transport {
-  // @ts-ignore
   public request(params, options, callback = undefined) {
     if (typeof options === 'function') {
       callback = options
@@ -31,7 +31,13 @@ class AWSTransport extends Transport {
     // Wrap promise API
     const isPromiseCall = typeof callback !== 'function'
     if (isPromiseCall) {
-      return (config.credentials as Credentials).getPromise().then(() => super.request(params, options, callback))
+      const p = (config.credentials as Credentials)
+        .getPromise()
+        .then(() => super.request(params, options, callback)) as TransportRequestPromise<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ApiResponse<Record<string, any>, Record<string, unknown>>
+      >
+      return p
     }
 
     ;(config.credentials as Credentials).get(err => {
