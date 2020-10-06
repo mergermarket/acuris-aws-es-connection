@@ -31,15 +31,15 @@ class AWSTransport extends Transport {
     // Wrap promise API
     const isPromiseCall = typeof callback !== 'function'
     if (isPromiseCall) {
-      const p = (config.credentials as Credentials)
+      return (config.credentials as Credentials)
         .getPromise()
         .then(() => super.request(params, options, callback)) as TransportRequestPromise<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ApiResponse<Record<string, any>, Record<string, unknown>>
       >
-      return p
     }
 
+    //Wrap callback API
     ;(config.credentials as Credentials).get(err => {
       if (err) {
         callback(err, null)
