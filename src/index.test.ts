@@ -1,4 +1,4 @@
-import { createAWSConnection, awsCredsifyAll, awsGetCredentials} from './index'
+import { createAWSConnection, awsGetCredentials } from './index'
 import * as AWS from 'aws-sdk'
 import { Client } from '@elastic/elasticsearch'
 
@@ -22,12 +22,11 @@ describe('aws-es-connection', () => {
     }
 
     const awsEsConnection = createAWSConnection(await awsGetCredentials())
-    esClient = awsCredsifyAll(
-      new Client({
-        node: esEndpoint,
-        Connection: awsEsConnection
-      })
-    )
+    esClient = new Client({
+      ...awsEsConnection,
+      node: esEndpoint
+    })
+
     indexPrefix = `aws-es-connection-tests-${new Date().getTime()}`
   })
 
