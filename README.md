@@ -1,11 +1,11 @@
 # AWS ES Connection
 
-> AWS ES connection for the new elasticsearch client (@elastic/elasticsearch)
+AWS ES connection for the new elasticsearch client (@elastic/elasticsearch)
 
 ## Usage
  Javascript:
-```
-const { Client } = require('@elastic/elasticsearch');
+```js
+const { Client } = require('@elastic/elasticsearch')
 const { createAWSConnection, awsGetCredentials } = require('@acuris/aws-es-connection')
 
 const awsCredentials = await awsGetCredentials()
@@ -20,7 +20,7 @@ await client.cat.help()
 ```
 
  Typescript:
-```
+```ts
 import { createAWSConnection, awsGetCredentials } from '@acuris/aws-es-connection'
 import AWS from 'aws-sdk'
 import { Client } from '@elastic/elasticsearch'
