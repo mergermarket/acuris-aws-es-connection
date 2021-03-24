@@ -11,8 +11,8 @@ const { createAWSConnection, awsGetCredentials } = require('@acuris/aws-es-conne
 const awsCredentials = await awsGetCredentials()
 const AWSConnection = createAWSConnection(awsCredentials)
 const client = new Client({
-  ...AWSConnection
-  node: 'https://node-name.eu-west-1.es.amazonaws.com',
+  ...AWSConnection,
+  node: 'https://node-name.eu-west-1.es.amazonaws.com'
 })
 
 // inside async func
@@ -28,8 +28,8 @@ import { Client } from '@elastic/elasticsearch'
 const awsCredentials = await awsGetCredentials()
 const AWSConnection = createAWSConnection(awsCredentials)
 const client = new Client({
-  ...AWSConnection
-  node: 'https://node-name.eu-west-1.es.amazonaws.com',
+  ...AWSConnection,
+  node: 'https://node-name.eu-west-1.es.amazonaws.com'
 })
 
 // inside async func
