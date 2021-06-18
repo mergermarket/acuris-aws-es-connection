@@ -12,7 +12,7 @@ function generateAWSConnectionClass(credentials: Credentials) {
     }
 
     private signedRequest(reqParams: ClientRequestArgs): ClientRequest {
-      return request(sign(reqParams, credentials))
+      return request(sign({ ...reqParams, service: 'es' }, credentials))
     }
   }
 }
