@@ -98,9 +98,11 @@ describe('aws-es-connection', () => {
     try {
       // Create index and index some docs
       await esClient.indices.create({ index: indexName })
-      await esClient.index({ index: indexName, refresh: 'wait_for', body: doc1 })
-      await esClient.index({ index: indexName, refresh: 'wait_for', body: doc2 })
-      await esClient.index({ index: indexName, refresh: 'wait_for', body: doc3 })
+      await Promise.all([
+        esClient.index({ index: indexName, refresh: 'wait_for', body: doc1 }),
+        esClient.index({ index: indexName, refresh: 'wait_for', body: doc2 }),
+        esClient.index({ index: indexName, refresh: 'wait_for', body: doc3 }),
+      ])
 
       const result = await esClient.search({ index: indexName, q: 'Hello' })
       expect(result.body.hits.total.value).toBe(2)
@@ -108,5 +110,5 @@ describe('aws-es-connection', () => {
       // Clean up
       await esClient.indices.delete({ index: indexName })
     }
-  })
+  }, 10000)
 })
