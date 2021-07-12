@@ -1,5 +1,6 @@
 import { config, Credentials } from 'aws-sdk/global'
-import { request, ClientRequest, ClientRequestArgs } from 'http'
+import { request as httpRequest, ClientRequest, ClientRequestArgs } from 'http'
+import { request as httpsRequest } from 'https'
 import { sign } from 'aws4'
 import { ClientOptions, Connection, Transport } from '@elastic/elasticsearch'
 import { ApiResponse, TransportRequestPromise } from '@elastic/elasticsearch/lib/Transport'
@@ -12,6 +13,8 @@ function generateAWSConnectionClass(credentials: Credentials) {
     }
 
     private signedRequest(reqParams: ClientRequestArgs): ClientRequest {
+      const request = reqParams?.protocol === 'https:' ? httpsRequest : httpRequest
+
       return request(sign({ ...reqParams, service: 'es' }, credentials))
     }
   }
