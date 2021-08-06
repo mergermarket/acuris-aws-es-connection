@@ -1,7 +1,7 @@
 {
   "name": "@acuris/aws-es-connection",
   "private": false,
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "AWS ElasticSearch connection for the @elastic/elasticsearch ES client",
   "keywords": [
     "aws",
@@ -33,11 +33,11 @@
   "author": "Acuris",
   "license": "MIT",
   "peerDependencies": {
-    "@elastic/elasticsearch": "^7.13.0",
+    "@elastic/elasticsearch": ">=5.6.16",
     "aws-sdk": ">=2"
   },
   "devDependencies": {
-    "@elastic/elasticsearch": "7.9.1",
+    "@elastic/elasticsearch": "^7.13.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.3.2",
     "@typescript-eslint/eslint-plugin": "^4.28.3",

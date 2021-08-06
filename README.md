@@ -49,3 +49,5 @@ You need a running AWS ES instance for the tests to run against. Set the endpoin
 ```
 AWS_ES_ENDPOINT=https://xxxx.es.amazonaws.com npm test
 ```
+### Tested versions
+This package has been tested on versions of the official elasticsearch client up to 7.13.0. 
