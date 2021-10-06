@@ -5,7 +5,12 @@ import { sign } from 'aws4'
 import { ClientOptions, Connection, Transport } from '@elastic/elasticsearch'
 import { ApiResponse, TransportRequestPromise } from '@elastic/elasticsearch/lib/Transport'
 
-function generateAWSConnectionClass(credentials: Credentials) {
+declare type SignOpt = {
+  service: string;
+  region: string;
+}
+
+function generateAWSConnectionClass(credentials: Credentials, signOpts?: SignOpt) {
   return class AWSConnection extends Connection {
     public constructor(opts) {
       super(opts)
@@ -15,7 +20,7 @@ function generateAWSConnectionClass(credentials: Credentials) {
     private signedRequest(reqParams: ClientRequestArgs): ClientRequest {
       const request = reqParams?.protocol === 'https:' ? httpsRequest : httpRequest
 
-      return request(sign({ ...reqParams, service: 'es' }, credentials))
+      return request(sign({ ...reqParams, service: 'es', ...signOpts }, credentials))
     }
   }
 }
