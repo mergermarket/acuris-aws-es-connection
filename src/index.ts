@@ -6,8 +6,8 @@ import { ClientOptions, Connection, Transport } from '@elastic/elasticsearch'
 import { ApiResponse, TransportRequestPromise } from '@elastic/elasticsearch/lib/Transport'
 
 declare type SignOpt = {
-  service: string;
-  region: string;
+  service: 'es';
+  region?: string;
 }
 
 function generateAWSConnectionClass(credentials: Credentials, signOpts?: SignOpt) {
