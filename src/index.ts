@@ -59,9 +59,9 @@ function generateAWSTransportClass(credentials: Credentials) {
   };
 }
 
-export function createAWSConnection(awsCredentials: Credentials): ClientOptions {
+export function createAWSConnection(awsCredentials: Credentials, signOpts?: SignOpt): ClientOptions {
   return {
-    Connection: generateAWSConnectionClass(awsCredentials),
+    Connection: generateAWSConnectionClass(awsCredentials, signOpts),
     Transport: generateAWSTransportClass(awsCredentials)
   }
 }
